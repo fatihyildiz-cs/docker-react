@@ -1,0 +1,16 @@
+language: generic
+
+# step1: tell travis that we need a copy of docker
+sudo: required
+services:
+  - docker
+
+# step2: tell travis how to build our image
+before_install:
+  - docker build -t fatihyildizcs/docker-react -f Dockerfile.dev .
+
+# step3: tell travis how to run our test suite
+script:
+# -- --coverage makes the test suite terminate after one run. otherwise, it never returns
+# (npm run test waits for user input after running the tests)
+  - docker run -e CI=true fatihyildizcs/docker-react npm run test -- --coverage
