@@ -14,3 +14,18 @@ script:
 # -- --coverage makes the test suite terminate after one run. otherwise, it never returns
 # (npm run test waits for user input after running the tests)
   - docker run -e CI=true fatihyildizcs/docker-react npm run test -- --coverage
+
+# step4: tell travis how to deploy our application
+deploy:
+  provider: elasticbeanstalk
+  region: "eu-west-3"
+  # this is the name of the app that is created on ebs. not github repo name
+  app: "docker-react"
+  env: "Dockerreact-env"
+  bucket_name: "elasticbeanstalk-eu-west-3-643766311813"
+  bucker_path: "docker-react"
+  # tell travis to deploy our app only when we push something to the master branch
+  on:
+    branch: master
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
