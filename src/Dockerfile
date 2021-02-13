@@ -14,6 +14,4 @@ RUN npm run build
 # so it knows that a new phase is being started and drops the previous one.
 # default command of the nginx image will start the nginx, so no need to specify a command
 FROM nginx
-# aws elasticbeanstalk maps to this port
-EXPOSE 80
 COPY --from=0 /app/build /usr/share/nginx/html
